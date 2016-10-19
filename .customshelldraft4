@@ -1,10 +1,12 @@
+sleep 1
 
-sleep .5
-echo "Running Shell: customshell"
-sleep .5
+echo "Successfully Running Shell : 'customshell"
 
-PS1="$(tput setaf 6)\u-\h@\t->"; #SETS THE CURSER AS CYAN COLOUR, WITH THE USERNAME, HOST AND TIME
+sleep 1
+
+PS1="$(tput setaf 6)\u-\h@\t-> $(tput sgr0)"; #SETS THE CURSER AS CYAN COLOUR, WITH THE USERNAME, HOST AND TIME
 export PS1; #Allows it to be used.
+
 
 #Allows the colours to be restored to default (Dir as blue, red archive ect..)
 if [ -x /usr/bin/dircolors ]; then
@@ -18,18 +20,14 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+
 #These alias make the 'pwd' and 'date' functions N/A and force the messages below to be printed to the screen
 alias pwd="echo PWD function is not available, to view current directory, enter 'pw' to print current directory";
 alias date="echo DATE function is not availabe, to view date, enter 'dt'";
+
 
 #These alias replace the pwd and date functions with pw and dt and call them from their source location which is /bin/pwd and /bin/date
 alias pw="/bin/pwd";
 alias dt="/bin/date";
 
 
-
-
-alias pwd="echo PWD function is not available, to view current directory, enter$
-alias date="echo DATE function is not availabe, to view date, enter 'dt'";
-alias pw="/bin/pwd";
-alias dt="/bin/date";
