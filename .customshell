@@ -1,0 +1,8 @@
+echo "Running Shell: customshell"
+
+PS1="$(tput setaf 6)\u-\h@\t->"; #SETS THE CURSER AS CYAN COLOUR, WITH THE USERNAME, HOST AND TIME
+export PS1;
+
+
+
+
