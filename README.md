@@ -7,14 +7,16 @@ Step 2: Make sure you have .customshell and .profile located in /home/$USER (whe
 
 
 
-Step 3: Copy the contents of the '.profile' and paste them to your own '.profile' file.
+Step 3: Copy the contents of the '.profile' and paste them to your own '.profile' file, where specified.
          -To do this, type in the command 'sudo nano .profile' this will open the .profile as the sudo user.
          -Edit this by copying and pasting the contents directly and overwriting the previous .profile
          -(In order to return to the previous shell, just comment out the last if statement [ if -f ~/.customshell ]
-           and uncomment out (delete the #around the first two if statements. ))
+           and uncomment out (delete the #around the first if statement. ))
     
     
     
 Step 4: If you have followed these steps correctly, on next login, the .profile will source the .customshell,
-        and print the following: "Successfully Running Shell : 'customshell'
+        and print the following: "Successfully Running Shell : 'customshell'.
+        
+Step 5: Enjoy use of the customised shell! To make any changes, just type the command 'sudo nano .customshell' !
         
