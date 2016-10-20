@@ -19,4 +19,3 @@ Step 4: If you have followed these steps correctly, on next login, the .profile 
         and print the following: "Successfully Running Shell : 'customshell'.
         
 Step 5: Enjoy use of the customised shell! To make any changes, just type the command 'sudo nano .customshell'
-        
