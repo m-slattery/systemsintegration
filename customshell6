@@ -1,0 +1,91 @@
+###############################################################################################################################
+
+
+#Micheal Slattery
+#C12383326
+#Systems Integration Assignment
+#Completed: 21/10/2016
+
+
+###############################################################################################################################
+                                                #Prints message above curser if customshell is loaded.
+###############################################################################################################################
+
+sleep 1
+
+echo "Successfully Running Shell : 'customshell"
+
+sleep 1
+###############################################################################################################################
+                                                #Customising the curser
+###############################################################################################################################
+
+PS1="$(tput setaf 6) \u\h@\t -> $(tput sgr0)"; #SETS THE CURSER AS CYAN COLOUR, WITH THE USERNAME, HOST AND TIME....Last part sets the colours back to normal.
+export PS1; #Allows it to be used.
+
+###############################################################################################################################
+                                                #Restoring directories ect to normal colour-layout
+###############################################################################################################################
+
+#Allows the colours to be restored to default (Dir as blue, red archive ect..)
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+###############################################################################################################################
+                                                        #ALIAS'S
+###############################################################################################################################
+
+#These alias make the 'pwd' and 'date' and 'ifconfig' functions N/A and force the messages below to be printed to the screen
+alias pwd="echo PWD function N/A. View available commands by typing 'help'";
+alias date="echo DATE function N/A.View available commands by typing 'help'";
+alias ifconfig="echo IFCONFIG Function N/A. View available commands by typing 'help'";
+
+#These alias replace the pwd and date functions with pw and dt and call them from their source location which is /bin/pwd and /bin/date
+alias pw="/bin/pwd"; #Sources pwd function and allows pw to act as pwd
+alias dt="/bin/date +%Y%m%d%H%M%S"; #Source date function (in format wanted) and allows dt to act as date
+alias ifc="ip addr show eth0"; #Sources ifconfig function and allows ifc to act as ifconfig
+alias help="functionHelp"; #When user enters help, the function will be called
+alias return="functionBack"; #When the user enters back, the function, FUnctionBack will be called.
+
+###############################################################################################################################
+                                                        #Variables
+###############################################################################################################################
+
+
+AVAIL_DIR="/home/$(whoami)" #variable of /home/user
+
+###############################################################################################################################
+                                                        #Functions
+###############################################################################################################################
+
+#Function to display all the available commands after the user uses the alias 'help'
+functionHelp(){
+                echo -e "\t \t ***** AVAILABLE COMMANDS *****"
+                echo -e "\nCommand: dt"
+                echo -e "\tDisplay Date."
+                echo -e "\nCommand: pw"
+                echo -e "\tPrint Working Directory"
+                echo -e "\nCommand: ifc"
+                echo -e "\tThis will display network settings for eth0"
+                echo -e "\nCommand: back"
+                echo -e "\tThis will go back a directory!"
+                echo -e "\n \t\t******************************"
+} # End function help
+
+functionBack(){
+        if [ $(pw) == $AVAIL_DIR ];
+        then
+                echo -e "Restricted Access"
+        else
+                cd ..
+        fi
+} #end functionBack
+
