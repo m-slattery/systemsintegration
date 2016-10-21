@@ -1,0 +1,169 @@
+###############################################################################################################################
+
+
+#Micheal Slattery
+#C12383326
+#Systems Integration Assignment
+#Completed: 21/10/2016
+
+
+###############################################################################################################################
+                                                #Prints message above curser if customshell is loaded.
+###############################################################################################################################
+
+sleep 1
+
+echo "Successfully Running Shell : 'customshell"
+
+sleep 1
+
+###############################################################################################################################
+                                                #Customising the curser
+###############################################################################################################################
+
+PS1="$(tput setaf 6) \u\h@\t -> $(tput sgr0)"; #SETS THE CURSER AS CYAN COLOUR, WITH THE USERNAME, HOST AND TIME....Last part sets the colours back to normal.
+export PS1; #Allows it to be used.
+
+###############################################################################################################################
+                                                #Restoring directories ect to normal colour-layout
+###############################################################################################################################
+
+#Allows the colours to be restored to default (Dir as blue, red archive ect..)
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+###############################################################################################################################
+                                                        #ALIAS'S
+###############################################################################################################################
+
+alias pwd="echo PWD function N/A. View available commands by typing 'help'";
+alias date="echo DATE function N/A.View available commands by typing 'help'";
+alias ifconfig="echo IFCONFIG Function N/A. View available commands by typing 'help'";
+alias sudo="echo Restricted. See help for details.";
+alias su="echo Restricted. See help for details.";
+alias make="functionMakeDir";
+alias go2="functionGoToDir";
+
+alias pw="/bin/pwd"; #Sources pwd function and allows pw to act as pwd
+alias dt="/bin/date +%Y/%m/%d-%H:%M:%S"; #Source date function (in format wanted) and allows dt to act as date
+alias ifc="functionIfc"; #Sources ifconfig function and allows ifc to act as ifconfig
+alias help="functionHelp"; #When user enters help, the function will be called
+alias return="functionBack"; #When the user enters back, the function, FUnctionBack will be called.
+alias ud="echo $(id -u),$(id -g),$USER, $(id -Gn),$(ls -id /home/$USER)";
+
+###############################################################################################################################
+                                                        #Variables
+###############################################################################################################################
+
+
+AVAIL_DIR="/home/$(whoami)" #variable of /home/user
+
+###############################################################################################################################
+                                                        #Functions
+###############################################################################################################################
+
+#Function to display all the available commands after the user uses the alias 'help'
+functionHelp(){
+                echo -e "\t \t ***** AVAILABLE COMMANDS *****"
+                echo -e "\nCommand: dt"
+                echo -e "\tDisplay Date."
+                echo -e "\nCommand: pw"
+                echo -e "\tPrint Working Directory"
+                echo -e "\nCommand: ifc"
+                echo -e "\tThis will show a menu of available interfaces, which you can then chose to view"
+                echo -e "\nCommand: return"
+                echo -e "\tThis will go back a directory!"
+                echo -e "\nCommand: make"
+                echo -e "\tThis will make a directory, but only if it is in your home directory!"
+                echo -e "\nCommand: ud"
+                echo -e "\tThis will allow you to view user details in the format: Username, Group id, Username, Groupname, Inodes!"
+                echo -e "\nCommand: go2"
+                echo -e "\tThis will allow you to go to desired location"
+                 echo -e "\n \t\t******************************"
+} # End function help
+
+functionIfc(){
+
+                echo  "Please enter which ethernet you would like to display:"
+                echo -e "\t\n Command ifc1: Shows loopback"
+                echo -e "\t\n Command ifc2: Shows eth 0"
+                echo -e "\t\n Command ifc3  Shows eth 1"
+                echo -e "\t\n Command ifc4 shows eth 2"
+                echo -e "\t\n Command ifc5 shows eth 3"
+
+                read INPUT
+
+                if [ $INPUT == "ifc1" ]; then
+                        echo "$(ip addr show lo)"
+
+                        elif [ $INPUT == "ifc2" ]; then
+                               echo "$(ip addr show eth0)"
+
+
+                                elif [ $INPUT == "ifc3" ]; then
+                                      echo  "$(ip addr show eth1)"
+
+                                        elif [ $INPUT == "ifc4" ]; then
+                                             echo "$(ip addr show eth2)"
+
+                                                elif [ $INPUT == "ifc5" ]; then
+                                                        echo "$(ip addr show eth3)"
+
+                                                        else
+                                                                echo $INPUT Not a valid entry, Try again
+                                                                        echo -e "\n \n"
+                                                                                functionIfc
+
+                fi
+} #End functionIfc
+
+
+functionBack(){
+
+                if [ $(pw) == $AVAIL_DIR ]; then
+                        echo -e "Restricted Access"
+
+                                else
+                                        cd ..
+
+                fi
+} #end functionBack
+
+
+functionMakeDir(){
+
+                echo -e "\t Enter a directory name to create"
+                read input
+               
+              #If statement to check if the current directory is the available directory, then if the name of the directory doesnt already exist!
+
+                if [ $(pw) == "$AVAIL_DIR" ] &&  [ ! -d "$input" ]; then
+
+                        $(mkdir $input)
+
+                                else
+                                        echo "Sorry, No can do!"
+
+                fi
+}
+
+
+functionGoToDir(){
+
+                echo -e "\t Enter the place you would like to go to"
+                read input
+
+                if [ $input == "/" ]; then
+                        echo " $input Restricted"
+                              
+                                else
+                                        $(cd $input)
+                fi
+}
